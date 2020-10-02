@@ -1,68 +1,103 @@
+# Fast Track React app template with TypeScript & Redux 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Installation
+You should use either `npm` or `yarn` but not both. It's recommeded to use `yarn`
 
-In the project directory, you can run:
+This template already comes with all needed packages. In case you want to install manually, check the dependencies in `package.json` file. To install, run:
+```
+yarn install
+```
 
-### `npm start`
+## Features
+* Redux
+* Redux-thunk
+* Redux-saga
+* React-router
+* Prettier
+* ESLint
+* Husky & lint-staged
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The template comes with ready-made code for a very simple working demo (products list). To play around with it, run:
+```
+yarn start
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Modify or add new features
+Follow the file/folder structure as explained below to make necessary changes. For Redux, most of the time, you can copy existing files, modify something in there to make a new feature.
 
-### `npm test`
+## Folder structure
+* `src/components`: React components. For each component, it's better to put it in a separate folder. For example:
+  ```
+  src/components/Button/index.tsx
+  src/components/Button/Button.scss
+  src/components/Button/Button.stories.tsx
+  src/components/Button/Button.test.tsx
+  ```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* `src/hooks`: Custom hooks. For example:
+  ```
+  src/hooks/useCountries.ts
+  src/hooks/useUser.ts
+  ```
 
-### `npm run build`
+* `src/redux`: Everything (such as actions, reducers, sagas etc) related to Redux
+  * `src/redux/actions`: For Redux actions
+  * `src/redux/reducers`: For Redux reducers
+  * `src/redux/sagas`: For Redux sagas
+  * `src/redux/store.ts`: The Redux store
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  If there are multiple un-related features, split action/reducer/saga into different files. For example:
+  ```
+  src/redux/actions/product.ts
+  src/redux/actions/order.ts
+  src/redux/actions/ui.ts
+  ```
+  ```
+  src/redux/reducers/product.ts
+  src/redux/reducers/order.ts
+  src/redux/actions/ui.ts
+  ```
+  ```
+  src/redux/sagas/product.ts
+  src/redux/sagas/order.ts
+  src/redux/sagas/ui.ts
+  ```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+* `src/pages`: Pages (or views) when using [React router](https://reacttraining.com/react-router/web/guides/quick-start). For example:
+  ```
+  src/pages/Home.tsx
+  src/pages/Product.tsx
+  ```
+  If there are more files than just page's `*.tsx`, a folder structure can be used. For example:
+  ```
+  src/pages/Home/index.tsx
+  src/pages/Home/Home.scss
+  ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* `src/types.ts`: TypeScript's type definitions. For small apps, you can put definitions of all types, interfaces etc and even Redux's actions, action creators, states here.
 
-### `npm run eject`
+* `src/Routes.tsx`: Defines all the React router routes to different pages.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This template is suitable for rather small apps. For bigger apps, a better & more organized way is to split the folder structure into features, something like:
+  ```
+  sr/feature1
+  --components
+  --redux
+  ----action.ts
+  ----reducer.ts
+  ----saga.ts
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  src/feature2
+  --components
+  --redux
+  ----action.ts
+  ----reducer.ts
+  ----saga.ts
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  src/redux
+  --action.ts
+  --reducer.ts
+  --saga.ts
+  --store.ts
+  ```

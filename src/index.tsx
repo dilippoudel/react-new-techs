@@ -1,42 +1,25 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import createSagaMiddleware from 'redux-saga'
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import makeRootReducer from "./redux/reducer/combineReducer";
-import "semantic-ui-css/semantic.min.css";
-import { Provider } from "react-redux";
-import App from "./App";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 
-import rootSaga from './redux/saga/index';
-import { searchType, AppState } from "./redux/types/actions-types";
+import App from './App'
+import * as serviceWorker from './serviceWorker'
+import makeStore from './redux/store'
 
+const store = makeStore()
 
-const sagaMiddleware = createSagaMiddleware();
-
-const initialState: AppState = {
-  countryReducer: {
-      searchKeyword: "",
-      pageSize:20,
-      currentPage:1,
-      countries:[],
-      loading: false,
-      column: '',
-      deirection: '',
-  }
-}
-
-const store = createStore(
-  makeRootReducer(),
-  initialState,
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
-);
-
-sagaMiddleware.run(rootSaga)
-
-ReactDOM.render(
+const WithProvider = () => (
   <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+    <Router>
+      <App />
+    </Router>
+  </Provider>
+)
+
+ReactDOM.render(<WithProvider />, document.getElementById('root'))
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister()
